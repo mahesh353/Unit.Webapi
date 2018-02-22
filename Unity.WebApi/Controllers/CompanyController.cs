@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
+using Unity.Attributes;
 using Unity.WebApi.Core.Models;
 using Unity.WebApi.Core.RepositoryInterface;
 
@@ -9,10 +11,29 @@ namespace Unity.WebApi.Controllers
     {
 
         private ICompanyRepository _companyRepository;
+        //Type 1 : Constructor dependancy injection
 
-        public CompanyController(ICompanyRepository companyRepository)
+        //public CompanyController(ICompanyRepository companyRepository)
+        //{
+        //    _companyRepository = companyRepository;
+        //}
+            
+        //Type 2 :property injection
+
+        [Dependency]
+        public ICompanyRepository companyRepository
         {
-            _companyRepository = companyRepository;
+            get
+            {
+                return _companyRepository;
+            }
+            set {
+                if (value == null)
+                {
+                    throw new ArgumentNullException("Value");
+                }
+                _companyRepository = value;
+            }
         }
 
         public IEnumerable<Company> Get()
