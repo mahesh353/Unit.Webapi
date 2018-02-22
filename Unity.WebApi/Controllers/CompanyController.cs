@@ -17,23 +17,30 @@ namespace Unity.WebApi.Controllers
         //{
         //    _companyRepository = companyRepository;
         //}
-            
+
         //Type 2 :property injection
 
-        [Dependency]
-        public ICompanyRepository companyRepository
+        //[Dependency]
+        //public ICompanyRepository companyRepository
+        //{
+        //    get
+        //    {
+        //        return _companyRepository;
+        //    }
+        //    set {
+        //        if (value == null)
+        //        {
+        //            throw new ArgumentNullException("Value");
+        //        }
+        //        _companyRepository = value;
+        //    }
+        //}
+
+        //Type 3 : Method Injection
+        [InjectionMethod]
+        public void SetInjection(ICompanyRepository companyRepository)
         {
-            get
-            {
-                return _companyRepository;
-            }
-            set {
-                if (value == null)
-                {
-                    throw new ArgumentNullException("Value");
-                }
-                _companyRepository = value;
-            }
+            _companyRepository = companyRepository;
         }
 
         public IEnumerable<Company> Get()
